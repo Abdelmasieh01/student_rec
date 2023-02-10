@@ -1,0 +1,51 @@
+{% extends "main/index.html" %}
+
+{% block header%}
+<h2 class="p-5">قائمة الطلاب المسجلين:</h3>
+{% endblock %}
+
+{% block content %}
+<div class="px-4">
+  {% if items %}
+  <table class="table table-bordered table-striped table-primary" style="width:90rem">
+    <thead>
+    
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">اسم الطالب</th>
+        <th scope="col">الواجبات</th>
+        <th scope="col">المشاركة</th>
+        <th scope="col">الأنشطة الصيفية</th>
+        <th scope="col">البحوث</th>
+        <th scope="col">الحضور</th>
+        <th scope="col">الاختبار النظري</th>
+        <th scope="col">الاختبار العملي</th>
+        <th scope="col">المجموع (60)</th>
+        <th scope="col">مؤشر الأداء</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% load filters %}
+    {% for item in items %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ item.name }}</td>
+        <td><a href="http://{{ item.homework_link }}">{{ item.homework }}</a></td>
+        <td>{{ item.contribution }}</td>
+        <td>{{ item.summer }}</td>
+        <td><a href="http://{{ item.research_link }}">{{ item.reserach }}</a></td>
+        <td>{{ item.attendance }}</td>
+        <td>{{ item.paper_test }}</td>
+        <td>{{ item.practical_test }}</td>
+        <td>{{ item|get_total }}</td>
+        <td>{{ item|get_grade }}</td>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <h3 class="px-4">لم يتم إضافة أي بيانات بعد.</h3>
+  {% endif %}
+</div>
+{% endblock %}
